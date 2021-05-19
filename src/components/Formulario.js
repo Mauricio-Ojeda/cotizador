@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { obtenerDiferenciaYear, calcularMarca } from '../Helper';
+import { obtenerDiferenciaYear, calcularMarca, calcularPlan } from '../Helper';
 
 const Campo = styled.div`
     display: flex;
@@ -54,7 +54,7 @@ const Error = styled.div`
     margin: 1rem 0;
 `
 
-const Formulario = () => {
+const Formulario = ({ setResultado }) => {
     // state inicial del form
     const [datos, setDatos] = useState({
         marca: '',
@@ -107,8 +107,22 @@ const Formulario = () => {
         resultado -= porcentaje * resultado;
         console.log(resultado);
 
-        resultado = calcularMarca(marca, resultado);
-        console.log(resultado);               
+        // se suma porcentaje segun origen de la marca
+
+        resultado = calcularMarca( marca ) * resultado;
+        console.log(resultado); 
+        
+        // Tipo de plan 
+
+        resultado = parseFloat( calcularPlan( plan ) * resultado ).toFixed(2);
+        console.log(resultado);
+        
+        // pasar resultado
+
+        setResultado({
+            cantidad: resultado,
+            datos
+        });
 
     }
 

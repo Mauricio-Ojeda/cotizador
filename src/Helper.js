@@ -4,10 +4,19 @@ export const obtenerDiferenciaYear = (year) => ( new Date().getFullYear() - year
 
 // Obtener Incremento por marca
 
-export const calcularMarca = (marca, resultado) =>{
+export const calcularMarca = (marca) =>{
 
-			const precio = ( marca === "americano" ) ? resultado * 1.15  :
-                       	   ( marca === "europeo" )   ? resultado * 1.30  :
-                       	   ( marca === "asiatico" )  ? resultado * 1.05  : null;
-            return precio;           	   
-        }               	
+			const precioPorMarca = ( marca === "americano" ) ? 1.15  : // 15% aumento
+                       	   ( marca === "europeo" )   ? 1.30  : // 30% aumento
+                       	   ( marca === "asiatico" )  ? 1.05  : null; // 5% aumento o nada
+            return precioPorMarca;           	   
+        }  
+// Obtener incremento por Plan
+export const calcularPlan = ( plan ) =>{
+
+
+			const precioPorPlan = ( plan === "basico" ) 	? 1.20  : // 20% aumento
+                       	          ( plan === "completo" )  ? 1.50  : null; // 50% aumento o nada
+            
+			return precioPorPlan;           	   
+        } 		

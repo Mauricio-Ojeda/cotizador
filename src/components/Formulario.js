@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import Proptypes from 'prop-types' 
 import { obtenerDiferenciaYear, calcularMarca, calcularPlan } from '../Helper';
 
 const Campo = styled.div`
@@ -22,7 +23,7 @@ const Select = styled.select`
 `;
 
 const InputRadio = styled.input`
-    margin: 0 1rem;
+    margin: 0 0.6rem;
 `;
 
 const Button = styled.button`
@@ -54,7 +55,7 @@ const Error = styled.div`
     margin: 1rem 0;
 `
 
-const Formulario = ({ setResultado }) => {
+const Formulario = ({ setResultado, setSpinner }) => {
     // state inicial del form
     const [datos, setDatos] = useState({
         marca: '',
@@ -97,33 +98,40 @@ const Formulario = ({ setResultado }) => {
         //obtener diferencia de años        
        
         const diferencia = obtenerDiferenciaYear(parseInt(year, 10));
-        console.log(diferencia);
-
+       
         // Restar un 3% por cada diferencia menor de año 
 
         let porcentaje = 0.03 * diferencia;
         
         
         resultado -= porcentaje * resultado;
-        console.log(resultado);
-
+        
         // se suma porcentaje segun origen de la marca
 
         resultado = calcularMarca( marca ) * resultado;
-        console.log(resultado); 
-        
+                
         // Tipo de plan 
 
         resultado = parseFloat( calcularPlan( plan ) * resultado ).toFixed(2);
-        console.log(resultado);
         
-        // pasar resultado
+        setSpinner(true);
+        
+                
+        setTimeout(() => {
 
-        setResultado({
-            cantidad: resultado,
-            datos
-        });
+            //eliminar spinner
+            setSpinner(false);
 
+           
+            // pasar resultado
+            setResultado({
+                cantidad: Number(resultado),
+                datos
+            });
+
+        }, 3000);
+        
+       
     }
 
     return (
@@ -197,6 +205,11 @@ const Formulario = ({ setResultado }) => {
             <Button type="submit">Cotizar</Button>
         </form> 
     )
+}
+
+Formulario.propTypes = {
+    setResultado: Proptypes.func.isRequired,
+    setSpinner: Proptypes.func.isRequired
 }
 
 export default Formulario

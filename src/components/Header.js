@@ -1,4 +1,5 @@
 import React from 'react';
+import Proptypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const ContainerHeader = styled.header`
@@ -21,6 +22,12 @@ const Header = ({ title }) => {
                          
         </ContainerHeader>
     )
+}
+
+Header.propTypes = {
+    
+    title: Proptypes.string.isRequired
+    
 }
 
 export default Header

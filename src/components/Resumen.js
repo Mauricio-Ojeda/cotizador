@@ -1,4 +1,5 @@
 import React from 'react';
+import Proptypes from 'prop-types';
 import styled from '@emotion/styled';
 
 const Container = styled.div`
@@ -16,29 +17,28 @@ const Ul = styled.ul `
     
 `;
 
-const Resumen = ({datos}) => {
+const Resumen = ({ datos }) => {
     const {marca, year, plan} = datos;
     
-    if(marca === '' || year === '' || plan === ''){
-        return (
-            <Container>
-                <p>Debes Completar Marca, Año y Plan.</p>
-            </Container>
-        );
-    }
+   return (marca === '' || year === '' || plan === '') ? null :(
+                                                                    <Container>
+                                                                        <h2>Resumen de Cotización</h2>
+                                                                        <Ul>
+                                                                            <li>Marca: {marca}</li>
+                                                                            <li>Año: {year}</li>
+                                                                            <li>Plan: {plan}</li>
+                                                                        </Ul>
 
+                                                                    </Container>
+                                                                )
 
-    return (
-        <Container>
-           <h2>Resumen de Cotización</h2>
-           <Ul>
-               <li>Marca: {marca}</li>
-               <li>Año: {year}</li>
-               <li>Plan: {plan}</li>
-           </Ul>
+    
+}    
 
-        </Container>
-    )
+Resumen.propTypes = {
+    
+    datos: Proptypes.object.isRequired
+    
 }
 
 export default Resumen

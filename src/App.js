@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Formulario from './components/Formulario';
 import MostrarResultado from './components/MostrarResultado';
 import Resumen from './components/Resumen';
+import Spinner from './components/spinner/Spinner';
 import styled from '@emotion/styled';
 
 const Container = styled.div` 
@@ -25,6 +26,9 @@ function App() {
           plan: ''
         }
   })
+  
+  const {cantidad, datos} = resultado
+  const [spinner, setSpinner] = useState(false);
 
   return (
     <Container >
@@ -34,14 +38,23 @@ function App() {
         <ContainerForm>
             <Formulario
               setResultado= { setResultado }
+              setSpinner= { setSpinner }
+             
             />
-               
-           <Resumen
-              datos={resultado.datos}
-            />
-            <MostrarResultado
-              resultado = { resultado }
-            />
+
+            {(spinner) ? <Spinner/> : null}
+            
+            {(!spinner) ? <Resumen
+                            datos={ datos }
+              
+                          /> : null
+            }  
+           
+            {(!spinner) ? <MostrarResultado
+                            cantidad = { cantidad }
+                          /> : null
+            }  
+
         </ContainerForm>
 
     </Container>
